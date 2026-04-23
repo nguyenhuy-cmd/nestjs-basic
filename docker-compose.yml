@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: nestjs-mongo
+    ports:
+      - "27019:27017" # Ánh xạ cổng từ container ra máy thật
+    volumes:
+      - mongodb_data:/data/db # Lưu dữ liệu để khi tắt docker không bị mất db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=huy # Tài khoản quản trị
+      - MONGO_INITDB_ROOT_PASSWORD=123456 # Mật khẩu quản trị
+
+volumes:
+  mongodb_data:
