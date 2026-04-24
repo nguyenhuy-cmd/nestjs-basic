@@ -4,7 +4,7 @@ import { HydratedDocument} from 'mongoose';
 
 export type UserDocument = HydratedDocument<User>;
 
-@Schema()
+@Schema({timestamps:true})//timestamps:true => tự động tạo createdAt và updatedAt
 export class User {
   @Prop({require: true})// bắt buộc phải điền
   email: string;
@@ -29,6 +29,12 @@ export class User {
 
   @Prop()
   updatedAt: Date;
+
+  @Prop()
+  deletedAt: boolean;
+
+  @Prop()
+  deletedBy: boolean; 
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

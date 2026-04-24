@@ -3,9 +3,36 @@ import { AuthService } from './auth.service';
 import { UsersModule } from 'src/users/users.module';
 import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from './passport/local.strategy';
+import { JwtModule } from '@nestjs/jwt';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { JwtStrategy } from './passport/jwt.strategy';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from './jwt-auth.guard';
+import ms = require('ms'); // ms là thời gian tính bằng mili giây
 
 @Module({
-  imports: [UsersModule, PassportModule],
-  providers: [AuthService, LocalStrategy]
+  imports: [UsersModule,
+    PassportModule,
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        secret: configService.get<string>('JWT_ACCESS_TOKEN'),
+        signOptions: {
+          expiresIn: (ms(configService.get<string>('JWT_ACCESS_EXPIRE') as any ?? '60s') as unknown as number) / 1000,
+        }
+      }),
+      inject: [ConfigService],
+    })
+  ],
+  providers: [
+    AuthService,
+    LocalStrategy,
+    JwtStrategy,
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+  ],
+  exports: [AuthService]
 })
 export class AuthModule { }
