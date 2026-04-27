@@ -7,7 +7,7 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 
 // Dùng require cho các thư viện không có type để tránh lỗi đỏ ở dòng import
-const softDeletePlugin = require('soft-delete-plugin-mongoose');// xóa mềm 
+const { softDeletePlugin } = require('soft-delete-plugin-mongoose');// xóa mềm 
 
 @Module({
   imports: [
