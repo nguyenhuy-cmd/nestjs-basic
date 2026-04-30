@@ -9,6 +9,7 @@ import { JwtStrategy } from './passport/jwt.strategy';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import ms = require('ms'); // ms là thời gian tính bằng mili giây
+import { AuthController } from './auth.controller';
 
 @Module({
   imports: [UsersModule,
@@ -33,6 +34,7 @@ import ms = require('ms'); // ms là thời gian tính bằng mili giây
       useClass: JwtAuthGuard,
     },
   ],
-  exports: [AuthService]
+  exports: [AuthService],
+  controllers: [AuthController],
 })
 export class AuthModule { }

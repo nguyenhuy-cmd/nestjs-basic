@@ -15,17 +15,4 @@ export class AppController {
     private readonly authService: AuthService
   ) { }
 
-  @Public()// Không cần token
-  // Guard local để xác thực tài khoản đăng nhập 
-  @UseGuards(LocalAuthGuard)
-  @Post('/login')
-  handleLogin(@Request() req) {
-    return this.authService.login(req.user);
-  }
-
-  //@UseGuards(JwtAuthGuard)
-  @Get('profile')
-  getProfile(@Request() req) {
-    return req.user;
-  }
-}
+} 

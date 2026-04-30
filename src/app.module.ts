@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { CompaniesModule } from './companies/companies.module';
 
 // Dùng require cho các thư viện không có type để tránh lỗi đỏ ở dòng import
 const { softDeletePlugin } = require('soft-delete-plugin-mongoose');// xóa mềm 
@@ -28,7 +29,8 @@ const { softDeletePlugin } = require('soft-delete-plugin-mongoose');// xóa mề
       inject: [ConfigService],
     }),
     UsersModule,
-    AuthModule
+    AuthModule,
+    CompaniesModule
   ],
   controllers: [AppController],
   providers: [AppService],
