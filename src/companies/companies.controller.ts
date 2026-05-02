@@ -16,7 +16,7 @@ export class CompaniesController {
 
   @Get()
   @ResponseMessage("Nhận danh sách công ty")
-  findAll(@Query("page") page: string, @Query("limit") limit: string, @Query() qs : any) {// truy vấn dữ liệu theo limit và page (query params)
+  findAll(@Query("current") page: string, @Query("pageSize") limit: string, @Query() qs : any) {// truy vấn dữ liệu theo limit và page (query params)
     return this.companiesService.findAll(+page, +limit, qs);// 
   }
 

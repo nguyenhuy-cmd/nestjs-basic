@@ -20,8 +20,8 @@ export class UsersController {
   @ResponseMessage('Lấy danh sách tất cả các user')
   @Get()
   findAll(
-    @Query("page") currentPage: string,
-    @Query("limit") limit: string,
+    @Query("current") currentPage: string,
+    @Query("pageSize") limit: string,
     @Query() qs: string,
   ) {
     return this.usersService.findAll(+currentPage, +limit, qs);

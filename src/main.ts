@@ -6,7 +6,7 @@ import { ConfigService } from '@nestjs/config';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { TransformInterceptor } from './core/transform.interceptor';
-
+import cookieParser from 'cookie-parser';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const configService = app.get(ConfigService);
@@ -14,7 +14,7 @@ async function bootstrap() {
   const reflector = app.get(Reflector);
   app.useGlobalGuards(new JwtAuthGuard(reflector));// sử dụng guard jwt để xác thực token
   app.useGlobalInterceptors(new TransformInterceptor(reflector ));// sử dụng interceptor để transform response: Tức là để bọc data trả về với cấu trúc đồng nhất
-  
+  app.use(cookieParser());
 app.useStaticAssets(join(__dirname, '..', 'public'));// js, css, img
   app.setBaseViewsDir(join(__dirname, '..', 'views'));// view ejs
   app.setViewEngine('ejs');
@@ -38,6 +38,8 @@ app.enableVersioning({
   type: VersioningType.URI,
   defaultVersion: ['1', '2']
 });
+
+
 
   await app.listen(port);
   console.log(`>>> Server is running at: http://localhost:${port}`);

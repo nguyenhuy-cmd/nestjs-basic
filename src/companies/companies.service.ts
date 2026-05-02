@@ -30,8 +30,6 @@ export class CompaniesService {
     // Dọn dẹp filter để không bị lẫn tham số phân trang vào query database
     delete filter.current;
     delete filter.pageSize;
-    delete filter.page;
-    delete filter.limit;
 
     let current = +currentPage || 1;
     let defaultLimit = +limit || 10;
