@@ -27,9 +27,10 @@ app.useStaticAssets(join(__dirname, '..', 'public'));// js, css, img
   
    // Cấu hình cors 
   app.enableCors({
-  "origin": "*",
+  "origin": true,
   "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
   "preflightContinue": false,
+  credentials: true,// cho phép truy cập cookie
 });
 
 // Versioning: dùng để quản lý các phiên bản api. Ở đây là version 1 @Version('1')
