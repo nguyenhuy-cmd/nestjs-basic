@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { CompaniesModule } from './companies/companies.module';
 import { JobsModule } from './jobs/jobs.module';
 import { FilesModule } from './files/files.module';
+import { ResumesModule } from './resumes/resumes.module';
 
 // Dùng require cho các thư viện không có type để tránh lỗi đỏ ở dòng import
 const { softDeletePlugin } = require('soft-delete-plugin-mongoose');// xóa mềm 
@@ -34,7 +35,8 @@ const { softDeletePlugin } = require('soft-delete-plugin-mongoose');// xóa mề
     AuthModule,
     CompaniesModule,
     JobsModule,
-    FilesModule
+    FilesModule,
+    ResumesModule
   ],
   controllers: [AppController],
   providers: [AppService],

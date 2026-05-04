@@ -56,9 +56,10 @@ type:Object
     @Prop({type: Object})
     deletedBy: {
        _id : mongoose.Schema.Types.ObjectId,
-      email : string
+      email : string,
+      logo : string,
     }; 
-  
+
     @Prop({type: Object})
     createdBy: {
       _id : mongoose.Schema.Types.ObjectId,
@@ -70,7 +71,8 @@ type:Object
       _id : mongoose.Schema.Types.ObjectId,
       email : string
     };
-  
+
+    
 }
 
 export const JobSchema = SchemaFactory.createForClass(Job);

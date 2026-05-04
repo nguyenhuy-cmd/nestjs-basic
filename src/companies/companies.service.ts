@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
 import { InjectModel } from '@nestjs/mongoose';
@@ -15,7 +15,7 @@ export class CompaniesService {
   ) { }
 
   async create(createCompanyDto: CreateCompanyDto, user: IUser) {
-    return this.companyModel.create({
+    return await this.companyModel.create({
       ...createCompanyDto,
       createdBy: {
         _id: user._id,
@@ -57,8 +57,11 @@ export class CompaniesService {
     }
   }
 
-  findOne(id: string) {
-    return this.companyModel.findOne({ _id: id });
+  async findOne(id: string) {
+    if(!mongoose.Types.ObjectId.isValid(id)){
+      throw new BadRequestException('Không tìm thấy công ty');
+    }
+    return await this.companyModel.findOne({ _id: id });
   }
 
   async update(id: string, updateCompanyDto: UpdateCompanyDto, user: IUser) {

@@ -12,7 +12,7 @@ export class FilesController {
   @Public()
   @Post('upload')
   @ResponseMessage("Upload file thành công")
-  @UseInterceptors(FileInterceptor('file'))
+  @UseInterceptors(FileInterceptor('fileUpload'))
   uploadFile(@UploadedFile(new ParseFilePipeBuilder()
   .addFileTypeValidator({
     fileType: /(jpg|jpeg|png)$/,

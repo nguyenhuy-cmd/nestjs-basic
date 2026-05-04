@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestj
 import { CompaniesService } from './companies.service';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
-import { ResponseMessage, User } from 'src/decorator/customize';
+import { Public,ResponseMessage, User } from 'src/decorator/customize';
 import { IUser } from 'src/users/users.interface';
 
 @Controller('companies')
@@ -15,11 +15,17 @@ export class CompaniesController {
   }
 
   @Get()
+  @Public()
   @ResponseMessage("Nhận danh sách công ty")
   findAll(@Query("current") page: string, @Query("pageSize") limit: string, @Query() qs : any) {// truy vấn dữ liệu theo limit và page (query params)
     return this.companiesService.findAll(+page, +limit, qs);// 
   }
 
+  @Get(':id')
+  @Public()
+  findOne(@Param('id') id: string) {
+    return this.companiesService.findOne(id);
+  }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateCompanyDto: UpdateCompanyDto, @User() user:IUser) {

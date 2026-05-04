@@ -11,6 +11,10 @@ class Company {
     @IsString({message: 'Tên công ty không hợp lệ'})
     @IsNotEmpty({message: 'Tên công ty không được để trống'})
     name: string;
+
+    @IsNotEmpty({message: ' Logo công ty không được để trống'})
+    logo: string;
+    
 }
 // NestJS không hỗ trợ Object trong @Body, chỉ hỗ trợ class nên phải định nghĩa class Company
 export class CreateJobDto {
@@ -27,8 +31,8 @@ export class CreateJobDto {
     @Type(() => Company)
     company: Company;
     
-    //@IsString({message: 'Địa chỉ không hợp lệ'})
-    //@IsNotEmpty({message: 'Địa chỉ không được để trống'})
+   
+    @IsNotEmpty({message: 'Địa chỉ không được để trống'})
     location: string;
 
     @IsNumber({},{message: 'Lương không hợp lệ'})

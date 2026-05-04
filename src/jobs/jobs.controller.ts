@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestj
 import { JobsService } from './jobs.service';
 import { CreateJobDto } from './dto/create-job.dto';
 import { UpdateJobDto } from './dto/update-job.dto';
-import { ResponseMessage, User } from 'src/decorator/customize';
+import { Public, ResponseMessage, User } from 'src/decorator/customize';
 import { IUser } from 'src/users/users.interface';
 
 @Controller('jobs')
@@ -17,6 +17,7 @@ export class JobsController {
 
   @Get()
   @ResponseMessage('Lấy danh sách công việc')
+  @Public()
   findAll(
     @Query('current') currentPage: string,
     @Query('pageSize') limit: string,
@@ -26,6 +27,7 @@ export class JobsController {
   }
 
   @Get(':id')
+  @Public()
   @ResponseMessage('Lấy chi tiết công việc')
   findOne(@Param('id') id: string) {
     return this.jobsService.findOne(id);
