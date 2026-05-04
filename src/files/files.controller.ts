@@ -1,9 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, ParseFilePipeBuilder, HttpStatus, UploadedFiles } from '@nestjs/common';
 import { FilesService } from './files.service';
 import { CreateFileDto } from './dto/create-file.dto';
 import { UpdateFileDto } from './dto/update-file.dto';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { Public } from 'src/decorator/customize';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
+import { Public, ResponseMessage } from 'src/decorator/customize';
 
 @Controller('files')
 export class FilesController {
@@ -11,9 +11,22 @@ export class FilesController {
 
   @Public()
   @Post('upload')
+  @ResponseMessage("Upload file thành công")
   @UseInterceptors(FileInterceptor('file'))
-  uploadFile(@UploadedFile() file: Express.Multer.File) {
-    console.log(file);
+  uploadFile(@UploadedFile(new ParseFilePipeBuilder()
+  .addFileTypeValidator({
+    fileType: /(jpg|jpeg|png)$/,
+  })
+  .addMaxSizeValidator({
+    maxSize: 1000000
+  })
+  .build({
+    errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY// lỗi 422
+  }),
+) file: Express.Multer.File) {
+    return {
+      filename: file.filename
+    }
   }
 
   @Get()

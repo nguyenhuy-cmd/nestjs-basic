@@ -14,7 +14,7 @@ export class CompaniesService {
     @InjectModel(Company.name) private companyModel: SoftDeleteModel<CompanyDocument>
   ) { }
 
-  create(createCompanyDto: CreateCompanyDto, user: IUser) {
+  async create(createCompanyDto: CreateCompanyDto, user: IUser) {
     return this.companyModel.create({
       ...createCompanyDto,
       createdBy: {

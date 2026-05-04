@@ -1,5 +1,8 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { CreateJobDto } from './create-job.dto';
+import { IsNotEmpty, IsString } from 'class-validator';
 
-export class UpdateJobDto extends PartialType(CreateJobDto) { }
-
+export class UpdateJobDto {
+    @IsString({ message: 'Mô tả không hợp lệ' })
+    @IsNotEmpty({ message: 'Mô tả không được để trống' })
+    description: string;
+}
