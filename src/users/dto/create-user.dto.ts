@@ -1,5 +1,5 @@
 import { Type } from "class-transformer";
-import { IsEmail, IsNotEmpty, IsNotEmptyObject, IsNumber, IsObject, IsString, MinLength, ValidateNested } from "class-validator";
+import { IsEmail, IsMongoId, IsNotEmpty, IsNotEmptyObject, IsNumber, IsObject, IsString, MinLength, ValidateNested } from "class-validator";
 import mongoose from "mongoose";
 
 // Data Transfer Object là nơi biến đổi dữ liệu nhận vào
@@ -43,7 +43,8 @@ export class CreateUserDto {
     address: string;
 
     @IsNotEmpty({message: 'Role không được để trống'})
-    role: string;
+    @IsMongoId({message: 'Role ID không hợp lệ'})
+    role: mongoose.Schema.Types.ObjectId;
     
     // để validate nestjs
     @IsNotEmptyObject()

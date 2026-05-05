@@ -85,7 +85,14 @@ export class UsersService {
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return "Không tìm thấy user";
     }
-    return this.userModel.findOne({_id: id}).select('-password');// select() để bỏ qua password
+    return this.userModel.findOne({_id: id}).select('-password').populate({ path: 'role', select: {
+      name: 1,
+      _id: 1
+    } }).populate({ path: 'role', select: {
+      name: 1,
+      permissions: 1
+    } });
+    // select() để bỏ qua password
   }
 
   findOneByUsername(username: string) {
@@ -109,8 +116,13 @@ export class UsersService {
   }
 
   async remove(id: string, user: IUser) {
+    
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return "Không tìm thấy user";
+    }
+    const foundUser = await this.userModel.findById(id);
+    if(foundUser.email === "admin@gmail.com"){
+      throw new BadRequestException("Không thể xóa user admin")
     }
     await this.userModel.softDelete(
       { _id: id },

@@ -30,8 +30,9 @@ export class User {
   @Prop()
   address: string;
 
-  @Prop()
-  role: string;
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Role.name })// ref: Role.name : để tham chiếu đến Role schema
+  role: mongoose.Schema.Types.ObjectId;
+
 
   @Prop()
   refreshToken: string;
@@ -67,4 +68,5 @@ export class User {
 
 export const UserSchema = SchemaFactory.createForClass(User);
 import { softDeletePlugin } from 'soft-delete-plugin-mongoose';// dùng để xóa mềm (soft delete) 
+import { Role } from 'src/roles/schemas/role.schema';
 UserSchema.plugin(softDeletePlugin);// gắn plugin vào schema để sử dụng tính năng xóa mềm 
